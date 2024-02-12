@@ -124,7 +124,7 @@ class AddPage(QWidget):
             with open(file_path, 'a', newline='') as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow([first_name, last_name, age, mobile, email, grade, class_name])
-                # Clear the fields after saving
+                
                 self.class_name_field.clear()
                 for field in self.student_fields:
                     field["field"].clear()
@@ -134,7 +134,7 @@ class AddPage(QWidget):
             with open(file_path, 'a', newline='') as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow([first_name_prof,last_name_prof, email_prof, department])
-                # Clear the fields after saving
+                
                 self.class_name_field.clear()
                 for field in self.professor_fields:
                     field["field"].clear()
@@ -144,7 +144,7 @@ class AddPage(QWidget):
             with open(file_path, 'a', newline='') as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow([class_name])
-                # Clear the fields after saving
+                
                 self.class_name_field.clear()
         else:
             QMessageBox.information(self," Not enough Args ", "Please fill the fields")

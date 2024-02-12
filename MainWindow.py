@@ -35,13 +35,13 @@ class MainWindow(QMainWindow):
         self.second_widget.button.clicked.connect(self.switch_to_main_widget)
         self.add_page.button.clicked.connect(self.switch_to_main_widget)
 
-        self.main_widget.search_field.textChanged.connect(self.filter_table)  # Connect textChanged signal to filter_table method
+        self.main_widget.search_field.textChanged.connect(self.filter_table) 
 
         self.main_widget.connect_table_double_click(self.handle_table_double_click)
 
         self.main_widget.import_button.clicked.connect(self.import_csv)
 
-        # Connect search field textChanged signal to filter_table method
+        
         self.main_widget.search_field.textChanged.connect(self.filter_table)
 
 
@@ -50,15 +50,17 @@ class MainWindow(QMainWindow):
 
 
     def filter_table(self, text):
-        text = text.lower()  # Convert the search text to lowercase for case-insensitive matching
+        text = text.lower()  
         for row in range(self.main_widget.table.rowCount()):
             item_class = self.main_widget.table.item(row, 0)
             item_student = self.main_widget.table.item(row, 1)
-            if item_class and item_student:  # Ensure there are valid items in the row
+            if item_class and item_student:  
                 class_text = item_class.text().lower()
                 student_text = item_student.text().lower()
-                if text in class_text or text in student_text:  # Check if the search text is present in any of the cell texts
-                    self.main_widget.table.setRowHidden(row, False)  # Show the row if it matches the search text
+                # Check if the search text is present in any of the cell texts
+                if text in class_text or text in student_text:  
+                # Show the row if it matches the search text
+                    self.main_widget.table.setRowHidden(row, False)  
                 else:
                     self.main_widget.table.setRowHidden(row, True)
 
@@ -80,7 +82,7 @@ class MainWindow(QMainWindow):
                     data = list(reader)
                     with open(data_file_path, 'a', newline='') as data_file:
                         writer = csv.writer(data_file)
-                        # Skip headers if they exist (assuming the first row is header)
+                        
                         if data and data[0]:
                             data = data[1:]
                         writer.writerows(data)
@@ -100,29 +102,6 @@ class MainWindow(QMainWindow):
         self.second_widget.profile_label.setText(profile_text)
         self.stacked_widget.setCurrentWidget(self.second_widget)
     
-    # def save_to_csv(self):
-    #     first_name = self.add_page.student_fields[0]["field"].text()
-    #     last_name = self.add_page.student_fields[1]["field"].text()
-    #     age = self.add_page.student_fields[2]["field"].text()
-    #     mobile = self.add_page.student_fields[3]["field"].text()
-    #     email = self.add_page.student_fields[4]["field"].text()
-    #     grade = self.add_page.student_fields[5]["field"].text()
-    #     class_name = self.add_page.class_name_field.text()
-
-    #     current_dir = os.path.dirname(os.path.realpath(__file__))
-    #     file_path = os.path.join(current_dir, "data.csv")
-
-    #     if first_name and last_name and age and mobile and email and grade:
-    #         with open(file_path, 'a', newline='') as csvfile:
-    #             writer = csv.writer(csvfile)
-    #             writer.writerow([first_name, last_name, age, mobile, email, grade, class_name])
-    #             # Clear the fields after saving
-    #             self.add_page.class_name_field.clear()
-    #             for field in self.add_page.student_fields:
-    #                 field["field"].clear()
-
-        # self.stacked_widget.setCurrentWidget(self.main_widget)
-        # self.display_csv()
 
     
     def display_csv(self):
@@ -147,7 +126,6 @@ class MainWindow(QMainWindow):
     def edit_selected_items(self):
         selected_items = self.main_widget.table.selectedItems()
         if selected_items:
-            # if len(selected_items) == 2:  # Assuming only one cell from each column is selected
                 new_class_name, new_student_name = None, None
                 for item in selected_items:
                     if item.column() == 0:

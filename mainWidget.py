@@ -9,19 +9,14 @@ class MainWidget(QWidget):
     def init_ui(self):
         layout = QVBoxLayout()
 
-        # self.label = QLabel("Main Widget", self)
-        # layout.addWidget(self.label)
 
         self.add_button = QPushButton("Add", self)  # Wide button to add data
         layout.addWidget(self.add_button)
 
 
-        # layout.addLayout(form_layout)
-
         button_layout = QHBoxLayout()
 
-        # self.save_button = QPushButton("Save", self)
-        # button_layout.addWidget(self.save_button)
+
 
         self.display_button = QPushButton("Display", self)
         button_layout.addWidget(self.display_button)
@@ -49,10 +44,10 @@ class MainWidget(QWidget):
         search_box.addWidget(self.search_field)
 
         layout.addLayout(search_box)
-        # self.search_field.textChanged.connect(self.filter_table)  # Connect textChanged signal to filter_table method
+
 
         self.table = QTableWidget(self)
-        self.table.setColumnCount(7)  # Number of columns for the new text fields
+        self.table.setColumnCount(7)  
         self.table.setHorizontalHeaderLabels([ "First Name", "Last Name", "Age", "Mobile", "Email", "Grade","Class"])
         layout.addWidget(self.table)
 

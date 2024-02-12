@@ -11,7 +11,7 @@ class SecondWidget(QWidget):
         self.label = QLabel("Second Widget", self)
         layout.addWidget(self.label)
 
-        self.profile_label = QLabel("", self)  # Label to display profile info
+        self.profile_label = QLabel("", self) 
         layout.addWidget(self.profile_label)
 
         self.button = QPushButton("Go to Main Widget", self)
