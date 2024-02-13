@@ -123,7 +123,7 @@ class AddPage(QWidget):
 
             with open(file_path, 'a', newline='') as csvfile:
                 writer = csv.writer(csvfile)
-                writer.writerow([first_name, last_name, age, mobile, email, grade, class_name])
+                writer.writerow([first_name, last_name, age, email,mobile, grade, class_name])
                 
                 self.class_name_field.clear()
                 for field in self.student_fields:
