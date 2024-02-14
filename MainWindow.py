@@ -48,6 +48,8 @@ class MainWindow(QMainWindow):
 
         self.main_widget.search_field.textChanged.connect(self.filter_table)
 
+        self.current_displayed_data = None
+
     def switch_to_add_page(self):
         self.stacked_widget.setCurrentWidget(self.add_page)
 
@@ -157,17 +159,20 @@ class MainWindow(QMainWindow):
     def display_student_data(self):
         # Load and display student data
         student_data = self.load_data_from_csv("student.csv")
-        self.main_widget.update_table(student_data)
+        self.main_widget.update_table(student_data, "student")
+        self.current_displayed_data = "student"
 
     def display_class_data(self):
         # Load and display class data
         class_data = self.load_data_from_csv("classes.csv")
-        self.main_widget.update_table(class_data)
+        self.main_widget.update_table(class_data, "class")
+        self.current_displayed_data = "class"
 
     def display_professor_data(self):
         # Load and display professor data
         professor_data = self.load_data_from_csv("profs.csv")
-        self.main_widget.update_table(professor_data)
+        self.main_widget.update_table(professor_data, "professor")
+        self.current_displayed_data = "professor"
 
     def load_data_from_csv(self, file_name):
         # Load data from CSV file
@@ -210,11 +215,11 @@ class MainWindow(QMainWindow):
 
     def save_table_to_csv(self):
         num_cols = self.main_widget.table.columnCount()
-        if num_cols == 7:  # Assuming 7 columns for student data
+        if self.current_displayed_data == "student":  
             file_name = "student.csv"
-        elif num_cols == 4:  # Adjust X and add similar conditions for other types of data
+        elif self.current_displayed_data == "professor":
             file_name = "profs.csv"
-        elif num_cols == 1:  # Adjust Y and add similar conditions for other types of data
+        elif self.current_displayed_data == "class":  
             file_name = "classes.csv"
         else:
             print("Unknown data type")

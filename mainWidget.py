@@ -45,7 +45,7 @@ class MainWidget(QWidget):
 
         self.setLayout(layout)
 
-    def update_table(self, data):
+    def update_table(self, data, selected_data:str):
         num_rows = len(data)
         num_cols = len(data[0]) if num_rows > 0 else 0
 
@@ -53,11 +53,11 @@ class MainWidget(QWidget):
         self.table.setColumnCount(num_cols)
 
         if num_rows > 0:
-            if num_cols== 7:
+            if selected_data == "student":
                 headers = ["Frist Name","Last Name","Age","Email","Mobile","Grade","Class"]  # Default headers
-            elif num_cols== 4:
-                headers = ["Frist Name","Last Name","Department","Email"]  # Default headers
-            elif num_cols==1:
+            elif selected_data == "professor":
+                headers = ["Frist Name","Last Name","Age","Email","Mobile", "Title", "Department"]  # Default headers
+            elif selected_data == "class":
                 headers = ["Class"]  # Default headers
             self.table.setHorizontalHeaderLabels(headers)
 
