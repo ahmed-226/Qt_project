@@ -44,7 +44,7 @@ class Ui_MainWindow(object):
         self.label_2 = QLabel(self.frame)
         self.label_2.setObjectName(u"label_2")
         self.label_2.setStyleSheet(u"")
-        self.label_2.setPixmap(QPixmap(u"../Corporate Management.png"))
+        self.label_2.setPixmap(QPixmap(u"Corporate_Management.png"))
         self.label_2.setScaledContents(True)
 
         self.verticalLayout_2.addWidget(self.label_2)

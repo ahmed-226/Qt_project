@@ -71,7 +71,7 @@ class AddPage(QWidget):
 
         self.setLayout(layout)
         
-        # self.hide_all_fields()
+        self.hide_all_fields()
 
     def show_student_fields(self):
         self.hide_all_fields()
