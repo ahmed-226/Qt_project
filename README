@@ -1,9 +1,13 @@
 # School System Program
 
 ## Introduction
-This project is a school system program developed using PySide6 for the graphical user interface (GUI) and Qt Designer for designing the UI components. It is built to manage various aspects of a school system, such as student records, courses, grades, and more. The program applies various data structures to efficiently organize and manage school data, including lists, dictionaries, and custom data structures for storing student and professor information.
+This project is a school system program developed using PySide6 for the graphical user interface (GUI) and Qt Designer for designing the UI components. 
+It is built to manage various aspects of a school system, such as student records, courses, grades, and more.
+The program applies various data structures to efficiently organize and manage school data, including lists, dictionaries, and custom data structures for storing student and professor information.
 
-Instead of using a traditional database system, this program support CSV (Comma-Separated Values) files to store and read data. CSV files provide a simple and lightweight solution for data storage and can be easily manipulated using Python's built-in CSV module. This approach simplifies the setup process and eliminates the need for a separate database management system.
+Instead of using a traditional database system, this program support CSV (Comma-Separated Values) files to store and read data.
+CSV files provide a simple and lightweight solution for data storage and can be easily manipulated using Python's built-in CSV module. 
+This approach simplifies the setup process and eliminates the need for a separate database management system.
 
 ## Requirements
 - Python 3.x
