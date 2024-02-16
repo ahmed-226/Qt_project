@@ -15,7 +15,7 @@ Instead of using a traditional database system, this program support CSV (Comma-
 
    
     ```bash
-     git clone [<repository_link>](https://github.com ahmed-226/School_mangment_system.git)
+     git clone https://github.com ahmed-226/School_mangment_system.git
     ```
 2. Install PySide6 using pip:
     ```python
