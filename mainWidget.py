@@ -1,66 +1,74 @@
-from PySide6.QtWidgets import  QPushButton, QVBoxLayout, QLabel, QWidget, QLineEdit, QTableWidget, QHBoxLayout,QTableWidgetItem
+from PySide6.QtWidgets import QPushButton, QVBoxLayout, QLabel, QWidget, QLineEdit, QTableWidget, QHBoxLayout, QTableWidgetItem
+from mainWidget_ui import Ui_mainWidget
 
-
-class MainWidget(QWidget):
+class MainWidget(QWidget,Ui_mainWidget):
     def __init__(self):
         super().__init__()
-        self.init_ui()
+        self.setupUi(self)
+        # self.init_ui()
 
-    def init_ui(self):
-        layout = QVBoxLayout()
+    # Note : 
+    # This part was prototype to test only functional parts 
+    # for out GUI part we use QT designer  
 
+    # def init_ui(self):
+    #     layout = QVBoxLayout()
 
-        self.add_button = QPushButton("Add", self)  # Wide button to add data
-        layout.addWidget(self.add_button)
+    #     self.add_button = QPushButton("Add", self)  # Wide button to add data
+    #     layout.addWidget(self.add_button)
 
+    #     button_box = QHBoxLayout()
+    #     self.student_data_button = QPushButton("Student Data", self)
+    #     self.class_data_button = QPushButton("Class Data", self)
+    #     self.professor_data_button = QPushButton("Professor Data", self)
+    #     button_box.addWidget(self.student_data_button)
+    #     button_box.addWidget(self.professor_data_button)
+    #     button_box.addWidget(self.class_data_button)
+    #     layout.addLayout(button_box)
 
-        button_layout = QHBoxLayout()
+    #     button_layout = QHBoxLayout()
+    #     self.delete_button = QPushButton("Delete", self)
+    #     button_layout.addWidget(self.delete_button)
+    #     self.edit_button = QPushButton("Edit", self)
+    #     button_layout.addWidget(self.edit_button)
+    #     self.import_button = QPushButton("Import", self)
+    #     button_layout.addWidget(self.import_button)
+    #     layout.addLayout(button_layout)
 
+    #     search_box = QHBoxLayout()
+    #     self.search_label = QLabel("Search:", self)
+    #     search_box.addWidget(self.search_label)
+    #     self.search_field = QLineEdit(self)
+    #     search_box.addWidget(self.search_field)
+    #     layout.addLayout(search_box)
 
+    #     self.table = QTableWidget(self)
+    #     layout.addWidget(self.table)
 
-        self.display_button = QPushButton("Display", self)
-        button_layout.addWidget(self.display_button)
+        # self.go_to_second_button = QPushButton("Go to Second Widget", self)
+        # layout.addWidget(self.go_to_second_button)
 
-        self.delete_button = QPushButton("Delete", self)
-        button_layout.addWidget(self.delete_button)
+        # self.setLayout(layout)
 
-        self.edit_button = QPushButton("Edit", self)
-        button_layout.addWidget(self.edit_button)
+    def update_table(self, data, selected_data:str):
+        num_rows = len(data)
+        num_cols = len(data[0]) if num_rows > 0 else 0
 
-        self.import_button = QPushButton("Import", self)
-        button_layout.addWidget(self.import_button)
+        self.table.setRowCount(num_rows)
+        self.table.setColumnCount(num_cols)
 
-        layout.addLayout(button_layout)
+        if num_rows > 0:
+            if selected_data == "student":
+                headers = ["Frist Name","Last Name","Age","Email","Mobile","Grade","Class"]  # Default headers
+            elif selected_data == "professor":
+                headers = ["Frist Name","Last Name","Age","Email","Mobile", "Title", "Department"]  # Default headers
+            elif selected_data == "class":
+                headers = ["class"]  # Default headers
+            self.table.setHorizontalHeaderLabels(headers)
 
-        # Add search field below the buttons
-
-        search_box=QHBoxLayout()
-
-
-        self.search_label = QLabel("Search:", self)
-        search_box.addWidget(self.search_label)
-
-        self.search_field = QLineEdit(self)
-        search_box.addWidget(self.search_field)
-
-        layout.addLayout(search_box)
-
-
-        self.table = QTableWidget(self)
-        self.table.setColumnCount(7)  
-        self.table.setHorizontalHeaderLabels([ "First Name", "Last Name", "Age", "Mobile", "Email", "Grade","Class"])
-        layout.addWidget(self.table)
-
-        self.go_to_second_button = QPushButton("Go to Second Widget", self)
-        layout.addWidget(self.go_to_second_button)
-
-        self.setLayout(layout)
-
-    def update_table(self, data):
-        self.table.setRowCount(len(data))
-        for i, row in enumerate(data):
-            for j, col in enumerate(row):
-                self.table.setItem(i, j, QTableWidgetItem(col))
+            for i, row in enumerate(data):
+                for j, col in enumerate(row):
+                    self.table.setItem(i, j, QTableWidgetItem(col))
 
     def connect_table_double_click(self, callback):
         self.table.doubleClicked.connect(callback)
