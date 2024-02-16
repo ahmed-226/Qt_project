@@ -51,7 +51,6 @@ class MainWindow(QMainWindow):
         self.main_widget.search_field.textChanged.connect(self.filter_table)
         self.current_displayed_data = None
 
-        self.current_displayed_data = None
 
     def switch_to_add_page(self):
         self.stacked_widget.setCurrentWidget(self.add_page)

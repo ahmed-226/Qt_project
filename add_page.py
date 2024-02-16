@@ -46,9 +46,11 @@ class AddPage(QWidget):
         self.professor_fields = [
             {"label": QLabel("First Name:", self), "field": QLineEdit()},
             {"label": QLabel("Last Name:", self), "field": QLineEdit()},
-            {"label": QLabel("Department:", self), "field": QLineEdit()},
-            {"label": QLabel("Email:", self), "field": QLineEdit()},
-            {"label": QLabel("mobile:", self), "field": QLineEdit()},
+            {"label": QLabel("Age:", self), "field": QLineEdit()},
+            {"label": QLabel("Mobile:", self), "field": QLineEdit()},
+            {"label": QLabel("Email: ", self), "field": QLineEdit()},
+            {"label": QLabel("Title:", self), "field": QLineEdit()},
+            {"label": QLabel("Department:", self), "field": QLineEdit()}
         ]
 
         for field in self.student_fields:
@@ -114,11 +116,14 @@ class AddPage(QWidget):
 
         first_name_prof = self.professor_fields[0]["field"].text()
         last_name_prof = self.professor_fields[1]["field"].text()
-        email_prof = self.professor_fields[2]["field"].text()
-        department = self.professor_fields[3]["field"].text()
+        age_prof = self.professor_fields[2]["field"].text()
+        mobile_prof = self.professor_fields[3]["field"].text()
+        email_prof = self.professor_fields[4]["field"].text()
+        title = self.professor_fields[5]["field"].text()
+        department = self.professor_fields[6]["field"].text()
 
 
-        if first_name and last_name and age and mobile and email and grade:
+        if grade:
             current_dir = os.path.dirname(os.path.realpath(__file__))
             file_path = os.path.join(current_dir, "student.csv")
 
@@ -129,12 +134,12 @@ class AddPage(QWidget):
                 self.class_name_field.clear()
                 for field in self.student_fields:
                     field["field"].clear()
-        elif first_name_prof and last_name_prof and email_prof and department :
+        elif title :
             current_dir = os.path.dirname(os.path.realpath(__file__))
             file_path = os.path.join(current_dir, "profs.csv")
             with open(file_path, 'a', newline='') as csvfile:
                 writer = csv.writer(csvfile)
-                writer.writerow([first_name_prof,last_name_prof, email_prof, department])
+                writer.writerow([first_name_prof,last_name_prof,age_prof, email_prof,mobile_prof, title, department])
                 
                 self.class_name_field.clear()
                 for field in self.professor_fields:
