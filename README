@@ -1,0 +1,44 @@
+# School System Program
+
+## Introduction
+This project is a school system program developed using PySide6 for the graphical user interface (GUI) and Qt Designer for designing the UI components. It is built to manage various aspects of a school system, such as student records, courses, grades, and more. The program applies various data structures to efficiently organize and manage school data, including lists, dictionaries, and custom data structures for storing student and professor information.
+
+Instead of using a traditional database system, this program support CSV (Comma-Separated Values) files to store and read data. CSV files provide a simple and lightweight solution for data storage and can be easily manipulated using Python's built-in CSV module. This approach simplifies the setup process and eliminates the need for a separate database management system.
+
+## Requirements
+- Python 3.x
+- PySide6
+- Qt Designer
+
+## Installation
+1. Clone the project repository from GitHub:
+
+   
+    ```bash
+     git clone [<repository_link>](https://github.com ahmed-226/School_mangment_system.git)
+    ```
+2. Install PySide6 using pip:
+    ```python
+    pip install PySide6
+    ```
+
+3.  go to dir 
+
+    ```bash
+    cd School_mangment_system
+    ```
+4.  run the program
+    
+    ```python
+    python start_program.py
+    ```
+
+## Features
+- **Student Management**: Add, import, export, edit, and delete student records.
+- **Professor Management**: Add, import, export, edit, and delete professor records.
+- **Course Management**: Manage courses offered by the school.
+- **Grade Management**: Record and manage student grades for each course.
+- **Data Structures**: The program utilizes various data structures such as lists, dictionaries, and custom data structures to efficiently manage and organize school data.
+
+## Contributing
+Contributions are welcome! If you find any bugs or have suggestions for improvements, please open an issue or submit a pull request on GitHub.
