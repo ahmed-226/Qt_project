@@ -77,14 +77,12 @@ class MainWindow(QMainWindow):
                     self.main_widget.table.setRowHidden(row, True)
 
     def import_csv(self):
-        num_cols = self.main_widget.table.columnCount()
-        
         current_dir = os.path.dirname(os.path.realpath(__file__))
-        if num_cols==7:
+        if self.current_displayed_data == "student":
             data_file_path = os.path.join(current_dir, "student.csv")
-        elif num_cols==4:
+        elif self.current_displayed_data == "professor": 
             data_file_path = os.path.join(current_dir, "profs.csv")
-        elif num_cols==1:
+        elif self.current_displayed_data == "class": 
             data_file_path = os.path.join(current_dir, "classes.csv")
 
         file_dialog = QFileDialog(self)
@@ -104,6 +102,26 @@ class MainWindow(QMainWindow):
                         if data and data[0]:
                             data = data[1:]
                         writer.writerows(data)
+
+    def export_csv(self):
+        # Allow the user to choose the export path
+        file_dialog = QFileDialog()
+        exported_file, _ = file_dialog.getSaveFileName(self, 'Save CSV File', '', 'CSV Files (*.csv)')
+        # Check if the user canceled the dialog
+        if not exported_file:
+            return
+        # Read the CSV file (replace this with your own data processing)
+        if self.current_displayed_data == "student":
+            file_name = "student.csv"
+        elif self.current_displayed_data == "professor":
+            file_name = "profs.csv"  
+        elif self.current_displayed_data == "class":
+            file_name = "classes.csv" 
+        else:
+            return
+        current_dir = os.path.dirname(os.path.realpath(__file__))
+        file_path = os.path.join(current_dir, file_name)
+        shutil.copyfile(file_path, exported_file)
 
     def handle_table_double_click(self, index):
         row = index.row()
