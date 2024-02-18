@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QPushButton, QVBoxLayout, QLabel, QWidget, QLineEdit, QTableWidget, QHBoxLayout, QTableWidgetItem
+from PySide6.QtWidgets import QPushButton, QVBoxLayout, QLabel, QWidget, QLineEdit, QHBoxLayout, QTableWidgetItem
 from mainWidget_ui import Ui_mainWidget
 
 class MainWidget(QWidget,Ui_mainWidget):
@@ -63,7 +63,7 @@ class MainWidget(QWidget,Ui_mainWidget):
             elif selected_data == "professor":
                 headers = ["Frist Name","Last Name","Age","Email","Mobile", "Title", "Department"]  # Default headers
             elif selected_data == "class":
-                headers = ["class"]  # Default headers
+                headers = ["class", "Professors", "Lecture Hall", "Time"]  # Default headers
             self.table.setHorizontalHeaderLabels(headers)
 
             for i, row in enumerate(data):

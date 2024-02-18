@@ -53,6 +53,13 @@ class AddPage(QWidget):
             {"label": QLabel("Department:", self), "field": QLineEdit()}
         ]
 
+        self.class_fields = [
+            {"label": QLabel("Class:", self), "field": QLineEdit()},
+            {"label": QLabel("Professors:", self), "field": QLineEdit()},
+            {"label": QLabel("Lecture Hall:", self), "field": QLineEdit()},
+            {"label": QLabel("Time:", self), "field": QLineEdit()},
+        ]
+
         for field in self.student_fields:
             input_box=QHBoxLayout()
             input_box.addWidget(field["label"])
@@ -60,6 +67,12 @@ class AddPage(QWidget):
             layout.addLayout(input_box)
         
         for field in self.professor_fields:
+            input_box=QHBoxLayout()
+            input_box.addWidget(field["label"])
+            input_box.addWidget(field["field"])
+            layout.addLayout(input_box)
+
+        for field in self.class_fields:
             input_box=QHBoxLayout()
             input_box.addWidget(field["label"])
             input_box.addWidget(field["field"])
@@ -90,18 +103,20 @@ class AddPage(QWidget):
 
     def show_class_fields(self):
         self.hide_all_fields()
-        self.class_name_label.show()
-        self.class_name_field.show()
+        for field in self.class_fields:
+            field["field"].show()
+            field["label"].show()
+
 
     def hide_all_fields(self):
-        for field in self.student_fields + self.professor_fields:
+        for field in self.student_fields + self.professor_fields + self.class_fields:
             field["field"].hide()
             field["label"].hide()
         self.class_name_label.hide()
         self.class_name_field.hide()
 
     def clear_fields(self):
-        for field in self.student_fields + self.professor_fields:
+        for field in self.student_fields + self.professor_fields + self.class_fields:
             field["field"].clear()
         self.class_name_field.clear()
 
@@ -121,6 +136,11 @@ class AddPage(QWidget):
         email_prof = self.professor_fields[4]["field"].text()
         title = self.professor_fields[5]["field"].text()
         department = self.professor_fields[6]["field"].text()
+
+        class_ = self.class_fields[0]["field"].text()
+        professors = self.class_fields[1]["field"].text()
+        hall = self.class_fields[2]["field"].text()
+        time = self.class_fields[3]["field"].text()
 
 
         if grade:
@@ -144,14 +164,16 @@ class AddPage(QWidget):
                 self.class_name_field.clear()
                 for field in self.professor_fields:
                     field["field"].clear()
-        elif class_name:
+        elif hall:
             current_dir = os.path.dirname(os.path.realpath(__file__))
             file_path = os.path.join(current_dir, "classes.csv")
             with open(file_path, 'a', newline='') as csvfile:
                 writer = csv.writer(csvfile)
-                writer.writerow([class_name])
+                writer.writerow([class_, professors, hall, time])
                 
                 self.class_name_field.clear()
+                for field in self.class_fields:
+                    field["field"].clear()
         else:
             QMessageBox.information(self," Not enough Args ", "Please fill the fields")
 

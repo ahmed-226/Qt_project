@@ -1,6 +1,7 @@
 import sys
 import csv
 import os
+import shutil
 from mainWidget import MainWidget
 from profileWidget import SecondWidget
 from PySide6.QtWidgets import QApplication,QFileDialog, QMainWindow, QStackedWidget, QTableWidgetItem
@@ -146,45 +147,48 @@ class MainWindow(QMainWindow):
         last_name = last_name_item.text()
         
         # Check if the selected item is from the student table or class table
-        if self.main_widget.table.objectName() == "student_table":
-            # Check if the selected first name and last name appear more than once
-            student_name = f"{first_name} {last_name}"
-            class_names = []
+        # if self.main_widget.table.objectName() == "student_table":
+        #     # Check if the selected first name and last name appear more than once
+        #     student_name = f"{first_name} {last_name}"
+        #     class_names = []
 
-            for r in range(self.main_widget.table.rowCount()):
-                if r != row:
-                    current_first_name = self.main_widget.table.item(r, 0).text()
-                    current_last_name = self.main_widget.table.item(r, 1).text()
+        #     for r in range(self.main_widget.table.rowCount()):
+        #         if r != row:
+        #             current_first_name = self.main_widget.table.item(r, 0).text()
+        #             current_last_name = self.main_widget.table.item(r, 1).text()
 
-                    if current_first_name == first_name and current_last_name == last_name:
-                        class_name = self.main_widget.table.item(r, 6).text()
-                        class_names.append(class_name)
+        #             if current_first_name == first_name and current_last_name == last_name:
+        #                 class_name = self.main_widget.table.item(r, 6).text()
+        #                 class_names.append(class_name)
 
-            # Collect information from the clicked row
-            row_data = {}
-            for col in range(num_columns):
-                header_text = self.main_widget.table.horizontalHeaderItem(col).text()
-                item_text = self.main_widget.table.item(row, col).text()
-                row_data[header_text] = item_text
+        #     # Collect information from the clicked row
+        #     row_data = {}
+        #     for col in range(num_columns):
+        #         header_text = self.main_widget.table.horizontalHeaderItem(col).text()
+        #         item_text = self.main_widget.table.item(row, col).text()
+        #         row_data[header_text] = item_text
 
-            # Add class names to the profile text if the student is in multiple classes
-            if class_names:
-                row_data['Class'] = ', '.join(class_names)
+        #     # Add class names to the profile text if the student is in multiple classes
+        #     if class_names:
+        #         row_data['Class'] = ', '.join(class_names)
 
-            # Update the profile in the SecondWidget
-            self.second_widget.update_profile(row_data)
-            self.stacked_widget.setCurrentWidget(self.second_widget)
-        else:
-            # Collect information from the clicked row
-            row_data = {}
-            for col in range(num_columns):
-                header_text = self.main_widget.table.horizontalHeaderItem(col).text()
-                item_text = self.main_widget.table.item(row, col).text()
-                row_data[header_text] = item_text
+        #     # Update the profile in the SecondWidget
+        #     self.second_widget.update_profile(row_data)
+        #     self.stacked_widget.setCurrentWidget(self.second_widget)
+        # else:
+        # Collect information from the clicked row
+        row_data = {}
+        for col in range(num_columns):
+            header_text = self.main_widget.table.horizontalHeaderItem(col).text()
+            item_text = self.main_widget.table.item(row, col).text()
+            row_data[header_text] = item_text
 
-            # Update the profile in the SecondWidget
-            self.second_widget.update_profile(row_data)
-            self.stacked_widget.setCurrentWidget(self.second_widget)
+        # Update the profile in the SecondWidget
+        self.second_widget.update_profile(row_data)
+        if self.current_displayed_data == "class":
+            student_data = self.load_data_from_csv("student.csv")
+            self.second_widget.update_profile_table(student_data, row_data['class'])
+        self.stacked_widget.setCurrentWidget(self.second_widget)
         
     def display_student_data(self):
         # Load and display student data
