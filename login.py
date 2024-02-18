@@ -109,14 +109,14 @@ class Ui_LoginWindow(object):
 
         
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    LoginPage = QtWidgets.QMainWindow()
-    ui = Ui_LoginWindow()
-    ui.setupUi(LoginPage)
-    ui.submit_PushButton.clicked.connect(ui.On_submit_clicked)
+# if __name__ == "__main__":
+#     import sys
+#     app = QtWidgets.QApplication(sys.argv)
+#     LoginPage = QtWidgets.QMainWindow()
+#     ui = Ui_LoginWindow()
+#     ui.setupUi(LoginPage)
+#     ui.submit_PushButton.clicked.connect(ui.On_submit_clicked)
     
-    LoginPage.show()
+#     LoginPage.show()
     
-    sys.exit(app.exec())
+#     sys.exit(app.exec())

@@ -24,7 +24,7 @@ class Ui_mainWidget(object):
     def setupUi(self, mainWidget):
         if not mainWidget.objectName():
             mainWidget.setObjectName(u"mainWidget")
-        mainWidget.resize(1000, 983)
+        mainWidget.resize(1017, 774)
         mainWidget.setStyleSheet(u"background-color: rgb(0, 0, 0);")
         self.horizontalLayout_3 = QHBoxLayout(mainWidget)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
@@ -98,11 +98,11 @@ class Ui_mainWidget(object):
 
         self.verticalLayout_2.addWidget(self.import_button)
 
-        self.updateEmpButton = QPushButton(self.frame)
-        self.updateEmpButton.setObjectName(u"updateEmpButton")
-        self.updateEmpButton.setFont(font)
-        self.updateEmpButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.updateEmpButton.setStyleSheet(u"#updateEmpButton\n"
+        self.export_button = QPushButton(self.frame)
+        self.export_button.setObjectName(u"export_button")
+        self.export_button.setFont(font)
+        self.export_button.setCursor(QCursor(Qt.PointingHandCursor))
+        self.export_button.setStyleSheet(u"#export_button\n"
 "{\n"
 "	text-align:left;\n"
 "	padding-left:26px;\n"
@@ -111,7 +111,7 @@ class Ui_mainWidget(object):
 "	background:#1F1F1F;\n"
 "	height:45px\n"
 "}\n"
-"#updateEmpButton:hover\n"
+"#export_button:hover\n"
 "{\n"
 "	text-align:left;\n"
 "	padding-left:26px;\n"
@@ -121,10 +121,10 @@ class Ui_mainWidget(object):
 "}")
         icon2 = QIcon()
         icon2.addFile(u":/Images/icons8_Registration_50px.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.updateEmpButton.setIcon(icon2)
-        self.updateEmpButton.setIconSize(QSize(32, 32))
+        self.export_button.setIcon(icon2)
+        self.export_button.setIconSize(QSize(32, 32))
 
-        self.verticalLayout_2.addWidget(self.updateEmpButton)
+        self.verticalLayout_2.addWidget(self.export_button)
 
         self.delete_button = QPushButton(self.frame)
         self.delete_button.setObjectName(u"delete_button")
@@ -181,11 +181,11 @@ class Ui_mainWidget(object):
 
         self.verticalLayout_2.addWidget(self.edit_button)
 
-        self.aboutButton = QPushButton(self.frame)
-        self.aboutButton.setObjectName(u"aboutButton")
-        self.aboutButton.setFont(font)
-        self.aboutButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.aboutButton.setStyleSheet(u"#aboutButton\n"
+        self.about_button = QPushButton(self.frame)
+        self.about_button.setObjectName(u"about_button")
+        self.about_button.setFont(font)
+        self.about_button.setCursor(QCursor(Qt.PointingHandCursor))
+        self.about_button.setStyleSheet(u"#about_button\n"
 "{\n"
 "	text-align:left;\n"
 "	padding-left:26px;\n"
@@ -194,7 +194,7 @@ class Ui_mainWidget(object):
 "	background:#1F1F1F;\n"
 "	height:45px\n"
 "}\n"
-"#aboutButton:hover\n"
+"#about_button:hover\n"
 "{\n"
 "	text-align:left;\n"
 "	padding-left:26px;	\n"
@@ -204,10 +204,10 @@ class Ui_mainWidget(object):
 "}")
         icon5 = QIcon()
         icon5.addFile(u":/Images/icons8_Money_50px_1.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.aboutButton.setIcon(icon5)
-        self.aboutButton.setIconSize(QSize(32, 32))
+        self.about_button.setIcon(icon5)
+        self.about_button.setIconSize(QSize(32, 32))
 
-        self.verticalLayout_2.addWidget(self.aboutButton)
+        self.verticalLayout_2.addWidget(self.about_button)
 
         self.frame_4 = QFrame(self.frame)
         self.frame_4.setObjectName(u"frame_4")
@@ -371,10 +371,10 @@ class Ui_mainWidget(object):
         self.label_2.setText("")
         self.add_button.setText(QCoreApplication.translate("mainWidget", u"Add", None))
         self.import_button.setText(QCoreApplication.translate("mainWidget", u"Import", None))
-        self.updateEmpButton.setText(QCoreApplication.translate("mainWidget", u"Export", None))
-        self.delete_button.setText(QCoreApplication.translate("mainWidget", u"  Delete", None))
+        self.export_button.setText(QCoreApplication.translate("mainWidget", u"Export", None))
+        self.delete_button.setText(QCoreApplication.translate("mainWidget", u"Delete", None))
         self.edit_button.setText(QCoreApplication.translate("mainWidget", u"Edit", None))
-        self.aboutButton.setText(QCoreApplication.translate("mainWidget", u"  About App", None))
+        self.about_button.setText(QCoreApplication.translate("mainWidget", u"About App", None))
         self.label_9.setText(QCoreApplication.translate("mainWidget", u"<html><head/><body><p align=\"center\"><span style=\" color:#ffffff;\">App Version: 1.0.0</span></p></body></html>", None))
         self.student_data_button.setText(QCoreApplication.translate("mainWidget", u"Students", None))
         self.professor_data_button.setText(QCoreApplication.translate("mainWidget", u"Professors", None))

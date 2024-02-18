@@ -6,6 +6,7 @@ from profileWidget import SecondWidget
 from PySide6.QtWidgets import QApplication,QFileDialog, QMainWindow, QStackedWidget, QTableWidgetItem
 from PySide6.QtGui import QKeySequence,QShortcut
 from add_page import AddPage
+from aboutPage import AboutPage
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -16,7 +17,7 @@ class MainWindow(QMainWindow):
     def init_ui(self):
         self.setWindowTitle("Main Window")
         self.resize(1100, 700)
-        self.setStyleSheet("background-color: rgb(0, 0, 0);")
+        self.setStyleSheet("background:#2D2D2D;")
 
         self.stacked_widget = QStackedWidget()
         self.setCentralWidget(self.stacked_widget)
@@ -24,18 +25,22 @@ class MainWindow(QMainWindow):
         self.main_widget = MainWidget()
         self.second_widget = SecondWidget()
         self.add_page = AddPage()
+        self.aboutPage=AboutPage()
 
         self.stacked_widget.addWidget(self.main_widget)
         self.stacked_widget.addWidget(self.second_widget)
+        self.stacked_widget.addWidget(self.aboutPage)
         self.stacked_widget.addWidget(self.add_page)
 
         self.main_widget.add_button.clicked.connect(self.switch_to_add_page)
-
         self.main_widget.delete_button.clicked.connect(self.delete_selected_items)
         self.main_widget.edit_button.clicked.connect(self.edit_selected_items)
-        QShortcut(QKeySequence("Ctrl+I"), self).activated.connect(self.import_csv)
+        self.main_widget.about_button.clicked.connect(self.switch_to_about_page)
+        
         self.second_widget.button.clicked.connect(self.switch_to_main_widget)
         self.add_page.button.clicked.connect(self.switch_to_main_widget)
+        self.aboutPage.back_button.clicked.connect(self.switch_to_main_widget)
+
         self.main_widget.student_data_button.clicked.connect(self.display_student_data)
         self.main_widget.class_data_button.clicked.connect(self.display_class_data)
         self.main_widget.professor_data_button.clicked.connect(self.display_professor_data)
@@ -47,6 +52,9 @@ class MainWindow(QMainWindow):
         self.main_widget.connect_table_double_click(self.handle_table_double_click)
 
         self.main_widget.import_button.clicked.connect(self.import_csv)
+        self.main_widget.export_button.clicked.connect(self.export_csv)
+        QShortcut(QKeySequence("Ctrl+I"), self).activated.connect(self.import_csv)
+        QShortcut(QKeySequence("Ctrl+E"), self).activated.connect(self.export_csv)
 
         self.main_widget.search_field.textChanged.connect(self.filter_table)
         self.current_displayed_data = None
@@ -54,6 +62,8 @@ class MainWindow(QMainWindow):
 
     def switch_to_add_page(self):
         self.stacked_widget.setCurrentWidget(self.add_page)
+    def switch_to_about_page(self):
+        self.stacked_widget.setCurrentWidget(self.aboutPage)
 
     def keyPressEvent(self, event):
         if event.matches(QKeySequence.Delete):
@@ -77,14 +87,12 @@ class MainWindow(QMainWindow):
                     self.main_widget.table.setRowHidden(row, True)
 
     def import_csv(self):
-        num_cols = self.main_widget.table.columnCount()
-        
         current_dir = os.path.dirname(os.path.realpath(__file__))
-        if num_cols==7:
+        if self.current_displayed_data == "student":
             data_file_path = os.path.join(current_dir, "student.csv")
-        elif num_cols==4:
+        elif self.current_displayed_data == "professor": 
             data_file_path = os.path.join(current_dir, "profs.csv")
-        elif num_cols==1:
+        elif self.current_displayed_data == "class": 
             data_file_path = os.path.join(current_dir, "classes.csv")
 
         file_dialog = QFileDialog(self)
@@ -104,6 +112,26 @@ class MainWindow(QMainWindow):
                         if data and data[0]:
                             data = data[1:]
                         writer.writerows(data)
+
+    def export_csv(self):
+        # Allow the user to choose the export path
+        file_dialog = QFileDialog()
+        exported_file, _ = file_dialog.getSaveFileName(self, 'Save CSV File', '', 'CSV Files (*.csv)')
+        # Check if the user canceled the dialog
+        if not exported_file:
+            return
+        # Read the CSV file (replace this with your own data processing)
+        if self.current_displayed_data == "student":
+            file_name = "student.csv"
+        elif self.current_displayed_data == "professor":
+            file_name = "profs.csv"  
+        elif self.current_displayed_data == "class":
+            file_name = "classes.csv" 
+        else:
+            return
+        current_dir = os.path.dirname(os.path.realpath(__file__))
+        file_path = os.path.join(current_dir, file_name)
+        shutil.copyfile(file_path, exported_file)
 
     def handle_table_double_click(self, index):
         row = index.row()
