@@ -5,6 +5,7 @@ from mainWidget import MainWidget
 from profileWidget import SecondWidget
 from PySide6.QtWidgets import QApplication,QFileDialog, QMainWindow, QStackedWidget, QTableWidgetItem
 from PySide6.QtGui import QKeySequence,QShortcut
+import shutil
 from add_page import AddPage
 from aboutPage import AboutPage
 
