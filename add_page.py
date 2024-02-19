@@ -1,6 +1,19 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout,QHBoxLayout, QLabel, QLineEdit, QPushButton,QMessageBox
+from PySide6.QtGui import QIntValidator,QValidator
+from PySide6.QtCore import  Qt
 import csv
 import os
+import re
+
+# class EmailValidator(QValidator):
+#     def validate(self, input_str, pos):
+#         email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+#         if re.match(email_pattern, input_str):
+#             return QValidator.Acceptable, input_str, pos
+#         elif len(input_str) == 0:
+#             return QValidator.Intermediate, input_str, pos
+#         else:
+#             return QValidator.Invalid, input_str, pos
 
 class AddPage(QWidget):
     def __init__(self):
@@ -53,6 +66,13 @@ class AddPage(QWidget):
             {"label": QLabel("Department:", self), "field": QLineEdit()}
         ]
 
+        self.class_fields = [
+            {"label": QLabel("Class:", self), "field": QLineEdit()},
+            {"label": QLabel("Professors:", self), "field": QLineEdit()},
+            {"label": QLabel("Lecture Hall:", self), "field": QLineEdit()},
+            {"label": QLabel("Time:", self), "field": QLineEdit()},
+        ]
+
         for field in self.student_fields:
             input_box=QHBoxLayout()
             input_box.addWidget(field["label"])
@@ -60,6 +80,12 @@ class AddPage(QWidget):
             layout.addLayout(input_box)
         
         for field in self.professor_fields:
+            input_box=QHBoxLayout()
+            input_box.addWidget(field["label"])
+            input_box.addWidget(field["field"])
+            layout.addLayout(input_box)
+
+        for field in self.class_fields:
             input_box=QHBoxLayout()
             input_box.addWidget(field["label"])
             input_box.addWidget(field["field"])
@@ -74,6 +100,32 @@ class AddPage(QWidget):
         
         self.hide_all_fields()
 
+        self.age_validator = QIntValidator(self)
+        self.age_validator.setBottom(0)  # Age should be a positive integer
+        self.professor_fields[2]["field"].setValidator(self.age_validator)
+        self.student_fields[2]["field"].setValidator(self.age_validator)
+        
+        self.mobile_validator = QIntValidator(self)
+        self.mobile_validator.setBottom(0)  # Mobile number should be positive
+        self.student_fields[3]["field"].setValidator(self.mobile_validator)
+        self.professor_fields[3]["field"].setValidator(self.mobile_validator)
+        
+        # self.student_fields[4]["field"].setValidator(EmailValidator())
+        # self.professor_fields[4]["field"].setValidator(EmailValidator())
+        # self.student_fields[4]["field"].setValidator(self.email_validator)
+        # self.professor_fields[4]["field"].setValidator(self.email_validator)
+        
+        
+    # def submit(self):
+    #     # Perform validation before submitting
+    #     email = self.student_fields[4]["field"].text()
+    #     print(email)
+    #     email_prof = self.professor_fields[4]["field"].text()
+    #     if not email.hasAcceptableInput() or not email_prof.hasAcceptableInput():
+    #         QMessageBox.warning(self, "Invalid Email", "Please enter a valid email address.")
+    #         return
+        
+        
     def show_student_fields(self):
         self.hide_all_fields()
         for field in self.student_fields:
@@ -90,22 +142,25 @@ class AddPage(QWidget):
 
     def show_class_fields(self):
         self.hide_all_fields()
-        self.class_name_label.show()
-        self.class_name_field.show()
+        for field in self.class_fields:
+            field["field"].show()
+            field["label"].show()
+
 
     def hide_all_fields(self):
-        for field in self.student_fields + self.professor_fields:
+        for field in self.student_fields + self.professor_fields + self.class_fields:
             field["field"].hide()
             field["label"].hide()
         self.class_name_label.hide()
         self.class_name_field.hide()
 
     def clear_fields(self):
-        for field in self.student_fields + self.professor_fields:
+        for field in self.student_fields + self.professor_fields + self.class_fields:
             field["field"].clear()
         self.class_name_field.clear()
 
     def save_to_csv(self):
+        # self.submit()
         first_name = self.student_fields[0]["field"].text()
         last_name = self.student_fields[1]["field"].text()
         age = self.student_fields[2]["field"].text()
@@ -121,6 +176,11 @@ class AddPage(QWidget):
         email_prof = self.professor_fields[4]["field"].text()
         title = self.professor_fields[5]["field"].text()
         department = self.professor_fields[6]["field"].text()
+
+        class_ = self.class_fields[0]["field"].text()
+        professors = self.class_fields[1]["field"].text()
+        hall = self.class_fields[2]["field"].text()
+        time = self.class_fields[3]["field"].text()
 
 
         if grade:
@@ -144,14 +204,16 @@ class AddPage(QWidget):
                 self.class_name_field.clear()
                 for field in self.professor_fields:
                     field["field"].clear()
-        elif class_name:
+        elif hall:
             current_dir = os.path.dirname(os.path.realpath(__file__))
             file_path = os.path.join(current_dir, "classes.csv")
             with open(file_path, 'a', newline='') as csvfile:
                 writer = csv.writer(csvfile)
-                writer.writerow([class_name])
+                writer.writerow([class_, professors, hall, time])
                 
                 self.class_name_field.clear()
+                for field in self.class_fields:
+                    field["field"].clear()
         else:
             QMessageBox.information(self," Not enough Args ", "Please fill the fields")
 
