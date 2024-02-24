@@ -1,33 +1,47 @@
 from PySide6.QtWidgets import QPushButton, QVBoxLayout, QLabel, QWidget, QLineEdit, QTableWidget, QHBoxLayout, QTableWidgetItem
+from profile_page_ui import Ui_Profile_page
 
-class SecondWidget(QWidget):
+
+class SecondWidget(QWidget,Ui_Profile_page):
     def __init__(self):
         super().__init__()
-        self.init_ui()
+        # self.init_ui()
+        self.setupUi(self)
 
-    def init_ui(self):
-        layout = QVBoxLayout()
-
-        self.profile_label = QLabel("", self) 
-        layout.addWidget(self.profile_label)
-
-        self.button = QPushButton("Go to Main Widget", self)
-        layout.addWidget(self.button)
-
-        self.setLayout(layout)
+    # def init_ui(self):
+    #     pass
 
     def update_profile(self, profile_data):
-        # Clear previous labels
-        for i in reversed(range(self.layout().count()-1)):
-            widget = self.layout().itemAt(i).widget()
-            if widget:
-                widget.deleteLater()
+        # # Clear previous labels
+        # for i in reversed(range(self.layout().count()-1)):
+        #     widget = self.layout().itemAt(i).widget()
+        #     if widget:
+        #         widget.deleteLater()
+        self.clear_layout(self.data_container_layout)
 
         # Add new labels for each header-value pair
         for header, value in profile_data.items():
             label_text = f"{header}: {value}"
             label = QLabel(label_text)
-            self.layout().insertWidget(self.layout().count() - 1, label)
+            self.setStyle(label)
+            self.data_container_layout.addWidget(label)
+
+    def setStyle(self,label):
+        label.setObjectName(u"label")
+        label.setStyleSheet(u"#label\n"
+        "{\n"
+        "color:white;\n"
+        "font-size: 15px;\n"
+        "font-weight: 700;\n"
+        "}\n")
+
+    def clear_layout(self ,layout):
+        # while layout.count():
+        for i in reversed(range(layout.count()-1)):
+            item = layout.takeAt(i).widget()
+            if item:
+                item.deleteLater()
+
 
     def update_profile_table(self, data, name:str):
         num_rows = len(data)
@@ -51,4 +65,4 @@ class SecondWidget(QWidget):
                     self.table.removeRow(rows_to_delete[-1])
                     rows_to_delete.pop()
         
-        self.layout().insertWidget(self.layout().count() - 1, self.table)
+        self.data_container_layout.insertWidget(self.layout().count() - 1, self.table)

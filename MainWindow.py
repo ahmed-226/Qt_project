@@ -2,11 +2,11 @@ import sys
 import csv
 import os
 import shutil
-from mainWidget import MainWidget
 from profileWidget import SecondWidget
 from PySide6.QtWidgets import QApplication,QFileDialog, QMainWindow, QStackedWidget, QTableWidgetItem
 from PySide6.QtGui import QKeySequence,QShortcut
-import shutil
+
+from mainWidget import MainWidget
 from add_page import AddPage
 from aboutPage import AboutPage
 
@@ -18,8 +18,8 @@ class MainWindow(QMainWindow):
 
     def init_ui(self):
         self.setWindowTitle("Main Window")
-        self.resize(1100, 700)
-        # self.setStyleSheet("background:#2D2D2D;")
+        self.resize(1100, 800)
+        self.setStyleSheet("background:#2D2D2D;")
 
         self.stacked_widget = QStackedWidget()
         self.setCentralWidget(self.stacked_widget)
@@ -39,8 +39,8 @@ class MainWindow(QMainWindow):
         self.main_widget.edit_button.clicked.connect(self.edit_selected_items)
         self.main_widget.about_button.clicked.connect(self.switch_to_about_page)
         
-        self.second_widget.button.clicked.connect(self.switch_to_main_widget)
-        self.add_page.button.clicked.connect(self.switch_to_main_widget)
+        self.second_widget.back_button.clicked.connect(self.switch_to_main_widget)
+        self.add_page.back_button.clicked.connect(self.switch_to_main_widget)
         self.aboutPage.back_button.clicked.connect(self.switch_to_main_widget)
 
         self.main_widget.student_data_button.clicked.connect(self.display_student_data)
@@ -145,41 +145,7 @@ class MainWindow(QMainWindow):
 
         if first_name_item is None or last_name_item is None:
             return
-
-        first_name = first_name_item.text()
-        last_name = last_name_item.text()
         
-        # Check if the selected item is from the student table or class table
-        # if self.main_widget.table.objectName() == "student_table":
-        #     # Check if the selected first name and last name appear more than once
-        #     student_name = f"{first_name} {last_name}"
-        #     class_names = []
-
-        #     for r in range(self.main_widget.table.rowCount()):
-        #         if r != row:
-        #             current_first_name = self.main_widget.table.item(r, 0).text()
-        #             current_last_name = self.main_widget.table.item(r, 1).text()
-
-        #             if current_first_name == first_name and current_last_name == last_name:
-        #                 class_name = self.main_widget.table.item(r, 6).text()
-        #                 class_names.append(class_name)
-
-        #     # Collect information from the clicked row
-        #     row_data = {}
-        #     for col in range(num_columns):
-        #         header_text = self.main_widget.table.horizontalHeaderItem(col).text()
-        #         item_text = self.main_widget.table.item(row, col).text()
-        #         row_data[header_text] = item_text
-
-        #     # Add class names to the profile text if the student is in multiple classes
-        #     if class_names:
-        #         row_data['Class'] = ', '.join(class_names)
-
-        #     # Update the profile in the SecondWidget
-        #     self.second_widget.update_profile(row_data)
-        #     self.stacked_widget.setCurrentWidget(self.second_widget)
-        # else:
-        # Collect information from the clicked row
         row_data = {}
         for col in range(num_columns):
             header_text = self.main_widget.table.horizontalHeaderItem(col).text()

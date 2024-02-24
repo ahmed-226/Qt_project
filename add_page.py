@@ -4,16 +4,17 @@ from PySide6.QtCore import  Qt
 import csv
 import os
 import re
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
+    QPushButton, QSizePolicy, QTextEdit, QVBoxLayout,
+    QWidget)
 
-# class EmailValidator(QValidator):
-#     def validate(self, input_str, pos):
-#         email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-#         if re.match(email_pattern, input_str):
-#             return QValidator.Acceptable, input_str, pos
-#         elif len(input_str) == 0:
-#             return QValidator.Intermediate, input_str, pos
-#         else:
-#             return QValidator.Invalid, input_str, pos
 
 class AddPage(QWidget):
     def __init__(self):
@@ -21,7 +22,7 @@ class AddPage(QWidget):
         self.init_ui()
 
     def init_ui(self):
-        layout = QVBoxLayout()
+        self.layout = QVBoxLayout()
 
         self.student_button = QPushButton("Student", self)
         self.professor_button = QPushButton("Professor", self)
@@ -34,17 +35,17 @@ class AddPage(QWidget):
         self.save_button.clicked.connect(self.save_to_csv)
 
         buttons_box = QHBoxLayout()
-        buttons_box.addWidget(self.student_button)
-        buttons_box.addWidget(self.professor_button)
-        buttons_box.addWidget(self.class_button)
-        layout.addLayout(buttons_box)
+        buttons_box.addWidget(self.student_button,0,Qt.AlignHCenter)
+        buttons_box.addWidget(self.professor_button,0,Qt.AlignHCenter)
+        buttons_box.addWidget(self.class_button,0,Qt.AlignHCenter)
+        self.layout.addLayout(buttons_box)
 
         input_box = QHBoxLayout()
         self.class_name_label = QLabel("Class Name:", self)
         self.class_name_field = QLineEdit(self)
         input_box.addWidget(self.class_name_label)
         input_box.addWidget(self.class_name_field)
-        layout.addLayout(input_box)
+        self.layout.addLayout(input_box)
 
         # Additional fields for students
         self.student_fields = [
@@ -77,26 +78,26 @@ class AddPage(QWidget):
             input_box=QHBoxLayout()
             input_box.addWidget(field["label"])
             input_box.addWidget(field["field"])
-            layout.addLayout(input_box)
+            self.layout.addLayout(input_box)
         
         for field in self.professor_fields:
             input_box=QHBoxLayout()
             input_box.addWidget(field["label"])
             input_box.addWidget(field["field"])
-            layout.addLayout(input_box)
+            self.layout.addLayout(input_box)
 
         for field in self.class_fields:
             input_box=QHBoxLayout()
             input_box.addWidget(field["label"])
             input_box.addWidget(field["field"])
-            layout.addLayout(input_box)
+            self.layout.addLayout(input_box)
 
-        layout.addWidget(self.save_button)
+        self.layout.addWidget(self.save_button,0,Qt.AlignHCenter)
 
-        self.button = QPushButton("Back", self)
-        layout.addWidget(self.button)
+        self.back_button = QPushButton("Back", self)
+        self.layout.addWidget(self.back_button,0,Qt.AlignHCenter)
 
-        self.setLayout(layout)
+        self.setLayout(self.layout)
         
         self.hide_all_fields()
 
@@ -109,6 +110,8 @@ class AddPage(QWidget):
         self.mobile_validator.setBottom(0)  # Mobile number should be positive
         self.student_fields[3]["field"].setValidator(self.mobile_validator)
         self.professor_fields[3]["field"].setValidator(self.mobile_validator)
+
+        self.set_style()
         
         # self.student_fields[4]["field"].setValidator(EmailValidator())
         # self.professor_fields[4]["field"].setValidator(EmailValidator())
@@ -116,15 +119,107 @@ class AddPage(QWidget):
         # self.professor_fields[4]["field"].setValidator(self.email_validator)
         
         
-    # def submit(self):
-    #     # Perform validation before submitting
-    #     email = self.student_fields[4]["field"].text()
-    #     print(email)
-    #     email_prof = self.professor_fields[4]["field"].text()
-    #     if not email.hasAcceptableInput() or not email_prof.hasAcceptableInput():
-    #         QMessageBox.warning(self, "Invalid Email", "Please enter a valid email address.")
-    #         return
-        
+    def set_style(self):
+        button_box=QVBoxLayout()
+        self.back_button.setObjectName(u"back_button")
+        self.back_button.setMinimumSize(QSize(150, 40))
+        self.back_button.setMaximumSize(QSize(150, 40))
+        font3 = QFont()
+        font3.setPointSize(11)
+        self.back_button.setFont(font3)
+        self.back_button.setStyleSheet(u"#back_button\n"
+        "{\n"
+        "	border:none;\n"
+        "	background:#F33253;\n"
+        "	color:white;\n"
+        "	border-radius:16px;\n"
+        "}\n"
+        "\n"
+        "#back_button:hover\n"
+        "{\n"
+        "	border:2px solid #F33253;\n"
+        "	background:#2D2D2D;\n"
+        "	color:#F33253;\n"
+        "	border-radius:16px;\n"
+        "}")
+        self.save_button.setObjectName(u"save_button")
+        self.save_button.setMinimumSize(QSize(150, 40))
+        self.save_button.setMaximumSize(QSize(150, 40))
+        font3 = QFont()
+        font3.setPointSize(11)
+        self.save_button.setFont(font3)
+        self.save_button.setStyleSheet(u"#save_button\n"
+        "{\n"
+        "	border:none;\n"
+        "	background:#F33253;\n"
+        "	color:white;\n"
+        "	border-radius:16px;\n"
+        "}\n"
+        "\n"
+        "#save_button:hover\n"
+        "{\n"
+        "	border:2px solid #F33253;\n"
+        "	background:#2D2D2D;\n"
+        "	color:#F33253;\n"
+        "	border-radius:16px;\n"
+        "}")
+        button_box.addWidget(self.save_button,0,Qt.AlignHCenter)
+        button_box.addWidget(self.back_button,0,Qt.AlignHCenter)
+        self.layout.addLayout(button_box)
+        #class button
+        self.class_button.setObjectName(u"class_button")
+        self.class_button.setMinimumSize(QSize(250, 100))
+        self.class_button.setMaximumSize(QSize(250, 100))
+        font3 = QFont()
+        font3.setPointSize(11)
+        self.class_button.setFont(font3)
+        self.class_button.setStyleSheet(u"#class_button\n"
+        "{\n"
+        "background-color:rgb(85, 124, 85);\n"
+        "border:none;\n"
+        "height:100%;\n"
+        "width:100%;\n"
+        "border-radius: 10px ;\n"
+        "color:white;\n"
+        "font-weight: 700;\n"
+        "font-size: 15px;\n"
+        "}")
+        #student button
+        self.student_button.setObjectName(u"student_button")
+        self.student_button.setMinimumSize(QSize(250, 100))
+        self.student_button.setMaximumSize(QSize(250, 100))
+        font3 = QFont()
+        font3.setPointSize(11)
+        self.student_button.setFont(font3)
+        self.student_button.setStyleSheet(u"#student_button\n"
+        "{\n"
+        "background-color:rgb(191, 49, 49);\n"
+        "border:none;\n"
+        "height:100%;\n"
+        "width:100%;\n"
+        "border-radius: 10px ;\n"
+        "color:white;\n"
+        "font-weight: 700;\n"
+        "font-size: 15px;\n"
+        "}")
+        #prof button
+        self.professor_button.setObjectName(u"professor_button")
+        self.professor_button.setMinimumSize(QSize(250, 100))
+        self.professor_button.setMaximumSize(QSize(250, 100))
+        font3 = QFont()
+        font3.setPointSize(11)
+        self.professor_button.setFont(font3)
+        self.professor_button.setStyleSheet(u"#professor_button\n"
+        "{\n"
+        "background-color:rgb(97, 163, 186);\n"
+        "border:none;\n"
+        "height:100%;\n"
+        "width:100%;\n"
+        "border-radius: 10px ;\n"
+        "color:white;\n"
+        "font-weight: 700;\n"
+        "font-size: 15px;\n"
+        "}")
         
     def show_student_fields(self):
         self.hide_all_fields()
