@@ -91,13 +91,14 @@ class MainWindow(QMainWindow):
                     self.main_widget.table.setRowHidden(row, True)
 
     def import_csv(self):
-        current_dir = os.path.dirname(os.path.realpath(__file__))
+        data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
+        # file_path = os.path.join(data_dir, file_name)
         if self.current_displayed_data == "student":
-            data_file_path = os.path.join(current_dir, "student.csv")
+            data_file_path = os.path.join(data_dir, "student.csv")
         elif self.current_displayed_data == "professor": 
-            data_file_path = os.path.join(current_dir, "profs.csv")
+            data_file_path = os.path.join(data_dir, "profs.csv")
         elif self.current_displayed_data == "class": 
-            data_file_path = os.path.join(current_dir, "classes.csv")
+            data_file_path = os.path.join(data_dir, "classes.csv")
 
         file_dialog = QFileDialog(self)
         file_dialog.setNameFilter("CSV Files (*.csv)")
@@ -133,8 +134,8 @@ class MainWindow(QMainWindow):
             file_name = "classes.csv" 
         else:
             return
-        current_dir = os.path.dirname(os.path.realpath(__file__))
-        file_path = os.path.join(current_dir, file_name)
+        data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
+        file_path = os.path.join(data_dir, file_name)
         shutil.copyfile(file_path, exported_file)
 
     def handle_table_double_click(self, index):
@@ -180,8 +181,8 @@ class MainWindow(QMainWindow):
     def load_data_from_csv(self, file_name):
         # Load data from CSV file
         data = []
-        current_dir = os.path.dirname(os.path.realpath(__file__))
-        file_path = os.path.join(current_dir, file_name)
+        data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
+        file_path = os.path.join(data_dir, file_name)
         with open(file_path, newline='') as csvfile:
             reader = csv.reader(csvfile)
             data = list(reader)
@@ -228,8 +229,9 @@ class MainWindow(QMainWindow):
             print("Unknown data type")
             return
 
-        current_dir = os.path.dirname(os.path.realpath(__file__))
-        file_path = os.path.join(current_dir, file_name)
+        # current_dir = 
+        data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
+        file_path = os.path.join(data_dir, file_name)
 
         with open(file_path, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)

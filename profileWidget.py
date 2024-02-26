@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QPushButton, QVBoxLayout, QLabel, QWidget, QLineEdit, QTableWidget, QHBoxLayout, QTableWidgetItem
-from profile_page_ui import Ui_Profile_page
+from designs.profile_page_ui import Ui_Profile_page
 
 
 class SecondWidget(QWidget,Ui_Profile_page):

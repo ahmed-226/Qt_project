@@ -381,16 +381,16 @@ class Ui_mainWidget(object):
         self.class_data_button.setText(QCoreApplication.translate("mainWidget", u"Classes", None))
         self.search_label.setText(QCoreApplication.translate("mainWidget", u"Search :", None))
         ___qtablewidgetitem = self.table.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("mainWidget", u"First Name", None));
+        ___qtablewidgetitem.setText(QCoreApplication.translate("mainWidget", u"First Name", None))
         ___qtablewidgetitem1 = self.table.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("mainWidget", u"Last Name", None));
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("mainWidget", u"Last Name", None))
         ___qtablewidgetitem2 = self.table.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("mainWidget", u"Age", None));
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("mainWidget", u"Age", None))
         ___qtablewidgetitem3 = self.table.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("mainWidget", u"Email", None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("mainWidget", u"Email", None))
         ___qtablewidgetitem4 = self.table.horizontalHeaderItem(4)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("mainWidget", u"Mobile", None));
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("mainWidget", u"Mobile", None))
         ___qtablewidgetitem5 = self.table.horizontalHeaderItem(5)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("mainWidget", u"Grade", None));
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("mainWidget", u"Grade", None))
     # retranslateUi
 

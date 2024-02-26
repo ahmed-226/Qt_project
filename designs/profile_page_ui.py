@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
     QPushButton, QSizePolicy, QTextEdit, QVBoxLayout,
     QWidget)
-import profile_images_rc
+from Resources import profile_images_rc
 
 class Ui_Profile_page(object):
     def setupUi(self, Profile_page):

@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QPushButton, QVBoxLayout, QLabel, QWidget, QLineEdit, QHBoxLayout, QTableWidgetItem
-from mainWidget_ui import Ui_mainWidget
+from designs.mainWidget_ui import Ui_mainWidget
 
 class MainWidget(QWidget,Ui_mainWidget):
     def __init__(self):

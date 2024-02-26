@@ -14,38 +14,41 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
     QPushButton, QSizePolicy, QTextEdit, QVBoxLayout,
     QWidget)
+from designs.addPage_ui import Ui_Form
 
 
-class AddPage(QWidget):
+class AddPage(QWidget,Ui_Form):
     def __init__(self):
         super().__init__()
+        self.setupUi(self)
         self.init_ui()
 
     def init_ui(self):
-        self.layout = QVBoxLayout()
+        # self.layout = QVBoxLayout()
 
-        self.student_button = QPushButton("Student", self)
-        self.professor_button = QPushButton("Professor", self)
-        self.class_button = QPushButton("Class", self)
-        self.save_button = QPushButton("Save", self)
+        # self.student_button = QPushButton("Student", self)
+        # self.professor_button = QPushButton("Professor", self)
+        # self.class_button = QPushButton("Class", self)
+        # self.save_button = QPushButton("Save", self)
 
         self.student_button.clicked.connect(self.show_student_fields)
         self.professor_button.clicked.connect(self.show_professor_fields)
         self.class_button.clicked.connect(self.show_class_fields)
         self.save_button.clicked.connect(self.save_to_csv)
 
-        buttons_box = QHBoxLayout()
-        buttons_box.addWidget(self.student_button,0,Qt.AlignHCenter)
-        buttons_box.addWidget(self.professor_button,0,Qt.AlignHCenter)
-        buttons_box.addWidget(self.class_button,0,Qt.AlignHCenter)
-        self.layout.addLayout(buttons_box)
+        # buttons_box = QHBoxLayout()
+        # buttons_box.addWidget(self.student_button,0,Qt.AlignHCenter)
+        # buttons_box.addWidget(self.professor_button,0,Qt.AlignHCenter)
+        # buttons_box.addWidget(self.class_button,0,Qt.AlignHCenter)
+        # self.layout.addLayout(buttons_box)
 
         input_box = QHBoxLayout()
         self.class_name_label = QLabel("Class Name:", self)
         self.class_name_field = QLineEdit(self)
+        self.set_style(self.class_name_label,self.class_name_field)
         input_box.addWidget(self.class_name_label)
         input_box.addWidget(self.class_name_field)
-        self.layout.addLayout(input_box)
+        self.data_box.addLayout(input_box)
 
         # Additional fields for students
         self.student_fields = [
@@ -77,29 +80,34 @@ class AddPage(QWidget):
         for field in self.student_fields:
             input_box=QHBoxLayout()
             input_box.addWidget(field["label"])
-            input_box.addWidget(field["field"])
-            self.layout.addLayout(input_box)
+            input_box.addWidget(field["field"],0,Qt.AlignVCenter)
+            self.set_style(field["label"],field["field"])
+            self.data_box.addLayout(input_box)
         
         for field in self.professor_fields:
             input_box=QHBoxLayout()
             input_box.addWidget(field["label"])
-            input_box.addWidget(field["field"])
-            self.layout.addLayout(input_box)
+            input_box.addWidget(field["field"],0,Qt.AlignVCenter)
+            self.set_style(field["label"],field["field"])
+
+            self.data_box.addLayout(input_box)
 
         for field in self.class_fields:
             input_box=QHBoxLayout()
             input_box.addWidget(field["label"])
-            input_box.addWidget(field["field"])
-            self.layout.addLayout(input_box)
+            input_box.addWidget(field["field"],0,Qt.AlignVCenter)
+            self.set_style(field["label"],field["field"])
 
-        self.layout.addWidget(self.save_button,0,Qt.AlignHCenter)
+            self.data_box.addLayout(input_box)
 
-        self.back_button = QPushButton("Back", self)
-        self.layout.addWidget(self.back_button,0,Qt.AlignHCenter)
+        # self.layout.addWidget(self.save_button,0,Qt.AlignHCenter)
 
-        self.setLayout(self.layout)
+        # self.back_button = QPushButton("Back", self)
+        # self.layout.addWidget(self.back_button,0,Qt.AlignHCenter)
+
+        # self.setLayout(self.layout)
         
-        self.hide_all_fields()
+        self.show_student_fields()
 
         self.age_validator = QIntValidator(self)
         self.age_validator.setBottom(0)  # Age should be a positive integer
@@ -111,116 +119,32 @@ class AddPage(QWidget):
         self.student_fields[3]["field"].setValidator(self.mobile_validator)
         self.professor_fields[3]["field"].setValidator(self.mobile_validator)
 
-        self.set_style()
         
-        # self.student_fields[4]["field"].setValidator(EmailValidator())
-        # self.professor_fields[4]["field"].setValidator(EmailValidator())
-        # self.student_fields[4]["field"].setValidator(self.email_validator)
-        # self.professor_fields[4]["field"].setValidator(self.email_validator)
-        
-        
-    def set_style(self):
-        button_box=QVBoxLayout()
-        self.back_button.setObjectName(u"back_button")
-        self.back_button.setMinimumSize(QSize(150, 40))
-        self.back_button.setMaximumSize(QSize(150, 40))
-        font3 = QFont()
-        font3.setPointSize(11)
-        self.back_button.setFont(font3)
-        self.back_button.setStyleSheet(u"#back_button\n"
+    def set_style(self,label,field):
+        label.setObjectName(u"label")
+        label.setStyleSheet(u"#label\n"
         "{\n"
         "	border:none;\n"
-        "	background:#F33253;\n"
         "	color:white;\n"
-        "	border-radius:16px;\n"
+        "	font-size:18px;\n"
+        "	font-weight:600;\n"
         "}\n"
-        "\n"
-        "#back_button:hover\n"
-        "{\n"
-        "	border:2px solid #F33253;\n"
-        "	background:#2D2D2D;\n"
-        "	color:#F33253;\n"
-        "	border-radius:16px;\n"
-        "}")
-        self.save_button.setObjectName(u"save_button")
-        self.save_button.setMinimumSize(QSize(150, 40))
-        self.save_button.setMaximumSize(QSize(150, 40))
-        font3 = QFont()
-        font3.setPointSize(11)
-        self.save_button.setFont(font3)
-        self.save_button.setStyleSheet(u"#save_button\n"
+        )
+        
+        field.setObjectName(u"field")
+        field.setMinimumSize(QSize(800, 40))
+        field.setMaximumSize(QSize(800, 40))
+        field.setStyleSheet(u"#field\n"
         "{\n"
         "	border:none;\n"
-        "	background:#F33253;\n"
-        "	color:white;\n"
-        "	border-radius:16px;\n"
+        "	background-color:white;\n"
+        "	color:black;\n"
+        "	border-radius:10px;\n"
+        "	font-size:18px;\n"
+        "	font-weight:600;\n"
         "}\n"
-        "\n"
-        "#save_button:hover\n"
-        "{\n"
-        "	border:2px solid #F33253;\n"
-        "	background:#2D2D2D;\n"
-        "	color:#F33253;\n"
-        "	border-radius:16px;\n"
-        "}")
-        button_box.addWidget(self.save_button,0,Qt.AlignHCenter)
-        button_box.addWidget(self.back_button,0,Qt.AlignHCenter)
-        self.layout.addLayout(button_box)
-        #class button
-        self.class_button.setObjectName(u"class_button")
-        self.class_button.setMinimumSize(QSize(250, 100))
-        self.class_button.setMaximumSize(QSize(250, 100))
-        font3 = QFont()
-        font3.setPointSize(11)
-        self.class_button.setFont(font3)
-        self.class_button.setStyleSheet(u"#class_button\n"
-        "{\n"
-        "background-color:rgb(85, 124, 85);\n"
-        "border:none;\n"
-        "height:100%;\n"
-        "width:100%;\n"
-        "border-radius: 10px ;\n"
-        "color:white;\n"
-        "font-weight: 700;\n"
-        "font-size: 15px;\n"
-        "}")
-        #student button
-        self.student_button.setObjectName(u"student_button")
-        self.student_button.setMinimumSize(QSize(250, 100))
-        self.student_button.setMaximumSize(QSize(250, 100))
-        font3 = QFont()
-        font3.setPointSize(11)
-        self.student_button.setFont(font3)
-        self.student_button.setStyleSheet(u"#student_button\n"
-        "{\n"
-        "background-color:rgb(191, 49, 49);\n"
-        "border:none;\n"
-        "height:100%;\n"
-        "width:100%;\n"
-        "border-radius: 10px ;\n"
-        "color:white;\n"
-        "font-weight: 700;\n"
-        "font-size: 15px;\n"
-        "}")
-        #prof button
-        self.professor_button.setObjectName(u"professor_button")
-        self.professor_button.setMinimumSize(QSize(250, 100))
-        self.professor_button.setMaximumSize(QSize(250, 100))
-        font3 = QFont()
-        font3.setPointSize(11)
-        self.professor_button.setFont(font3)
-        self.professor_button.setStyleSheet(u"#professor_button\n"
-        "{\n"
-        "background-color:rgb(97, 163, 186);\n"
-        "border:none;\n"
-        "height:100%;\n"
-        "width:100%;\n"
-        "border-radius: 10px ;\n"
-        "color:white;\n"
-        "font-weight: 700;\n"
-        "font-size: 15px;\n"
-        "}")
-        
+        )
+
     def show_student_fields(self):
         self.hide_all_fields()
         for field in self.student_fields:
@@ -279,8 +203,8 @@ class AddPage(QWidget):
 
 
         if grade:
-            current_dir = os.path.dirname(os.path.realpath(__file__))
-            file_path = os.path.join(current_dir, "student.csv")
+            data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
+            file_path = os.path.join(data_dir, "student.csv")
 
             with open(file_path, 'a', newline='') as csvfile:
                 writer = csv.writer(csvfile)
@@ -290,8 +214,8 @@ class AddPage(QWidget):
                 for field in self.student_fields:
                     field["field"].clear()
         elif title :
-            current_dir = os.path.dirname(os.path.realpath(__file__))
-            file_path = os.path.join(current_dir, "profs.csv")
+            data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
+            file_path = os.path.join(data_dir, "profs.csv")
             with open(file_path, 'a', newline='') as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow([first_name_prof,last_name_prof,age_prof, email_prof,mobile_prof, title, department])
@@ -300,8 +224,8 @@ class AddPage(QWidget):
                 for field in self.professor_fields:
                     field["field"].clear()
         elif hall:
-            current_dir = os.path.dirname(os.path.realpath(__file__))
-            file_path = os.path.join(current_dir, "classes.csv")
+            data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
+            file_path = os.path.join(data_dir, "classes.csv")
             with open(file_path, 'a', newline='') as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow([class_, professors, hall, time])
@@ -311,4 +235,5 @@ class AddPage(QWidget):
                     field["field"].clear()
         else:
             QMessageBox.information(self," Not enough Args ", "Please fill the fields")
+    
 

@@ -91,7 +91,7 @@ class Ui_LoginWindow(object):
     def On_submit_clicked(self):
         username=self.user_form.text()
         password=self.password_form.text()
-        with open("DS_users.txt" , "r") as file:
+        with open("./data/DS_users.txt" , "r") as file:
                 for line in file:
                         stored_user,stored_password=line.strip().split(" ")
                         if username==stored_user and password==stored_password:
